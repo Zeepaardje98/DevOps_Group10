@@ -9,10 +9,10 @@ reduce infrastructure maintenance to limit additional work on
 infrastructure for the IT department.
 
 ## Requirements
-* An attendance registration system prototype with back and front-end
-* Scalability to handle peak traffic
-* Automated deployment of back and front-end
-* All code must be void of plaintext secrets
+* An attendance registration system prototype with back and front-end.
+* Scalability to handle peak traffic.
+* Automated deployment of back and front-end.
+* All code must be void of plaintext secrets.
 
 ## Expected Output
 * Design of the created solution.
