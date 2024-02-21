@@ -22,10 +22,19 @@ class userServices():
         users = db['users']
         
         userData['_id'] = userData.pop('username')
+        print(userData['_id'])
         userData.update({
             "confirmed": userData['confirmed'] if userData['confirmed'] else False
 
         })
+        user = {
+            "_id": userData['_id'],
+            "name": userData['_id'],
+            "department": "CS",
+            "password": userData["password"],
+            "role": userData["role"],
+            "confirmed": userData["confirmed"],
+        }
         # userData = {
         #     "_id": user['username'],
         #     "name": user['name'],
@@ -35,7 +44,8 @@ class userServices():
         #     "confirmed": user['confirmed'] if user['confirmed'] else False
         # }
         if(userData['role'] == "student"):
-            userData['semester'] = userData['semester']
+            user['semester'] = userData['semester']
+            user["roll_no"] = userData["roll_no"]
 
 
         if(userServices.usernameExists(userData['_id'])):
@@ -48,7 +58,7 @@ class userServices():
             }
         else:
             try:
-                users.insert_one(userData)
+                users.insert_one(user)
                 response = {
                     "status": 200,
                     "result" : {

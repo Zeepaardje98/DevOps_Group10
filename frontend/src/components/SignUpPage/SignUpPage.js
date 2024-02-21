@@ -28,11 +28,14 @@ class SignUpPage extends Component{
         /////////////////////STATE///////////////////////////////
         this.state={
             data:{
-                username: "username",
+                username: "",
                 role: "student",
                 password: "",
                 confirm_password: "",
                 remember_me: false,
+                confirmed: true,
+                semester: 1,
+                roll_no: Math.floor(Math.random() * 1000)
             },
             errorsExists: false,
             errors: {

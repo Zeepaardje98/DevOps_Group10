@@ -5,9 +5,9 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app=app, support_credentials=True)
+app.config['CORS_HEADERS'] = 'Content-Type, Authorization, x-access-tokens, Access-Control-Allow-Origin'
 
-
-app.config['IMAGE_UPLOAD_PATH'] = "./static/images"
+app.config['IMAGE_UPLOAD_PATH'] = "app/static/images"
 
 
 client = MongoClient(host='localhost',port=27017)

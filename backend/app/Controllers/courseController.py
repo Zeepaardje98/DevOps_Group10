@@ -31,7 +31,7 @@ def initiate_attendence():
     imagestr = request.files['file']
     
     try: 
-        IMAGE_UPLOAD_PATH = "./static/images"
+        IMAGE_UPLOAD_PATH = app.config["IMAGE_UPLOAD_PATH"]
         path = os.path.join(IMAGE_UPLOAD_PATH,courseData.get('name'))
         print("Path : ",path)
         imagestr.save(path)    

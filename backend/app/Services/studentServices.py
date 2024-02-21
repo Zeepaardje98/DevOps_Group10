@@ -28,7 +28,7 @@ class studentServices():
                             })
             # print(studentEnrolled)
             if(not studentEnrolled):
-                courses.update({"name":course_to_enroll},{"$push":{"student_enrolled":student_data}})
+                courses.update_one({"name":course_to_enroll},{"$push":{"student_enrolled":student_data}})
                 response.update({
                     "result": {
                         "status": 201,

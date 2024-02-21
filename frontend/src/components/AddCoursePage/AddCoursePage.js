@@ -44,7 +44,7 @@ class AddCoursePage extends Component{
             const teacherProjection = {};
             this.props.setTeachers(teacherFilters,teacherProjection)
             .then(()=>{
-                const teacher = this.props.teachers[0]
+                const teacher = this.props.teachers[0] ?? null
                 /**
                  * CHECK IF TEACHER IS EMPTY
                  */

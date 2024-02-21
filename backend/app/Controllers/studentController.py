@@ -50,6 +50,7 @@ def enroll_student():
     ################ FROM DATA ###############
     courseData = json.loads(request.form.get('courseData'))
     student_roll = request.form.get('roll_no')
+    print("STUDENT ROLL", os.getcwd())
     imagestr = request.files['file']
     ##########################################
     
