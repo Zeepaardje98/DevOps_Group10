@@ -67,7 +67,8 @@ class ShowAttendance extends Component{
     }
 
     applyAuthentication(){
-        const data = this.state.data; 
+        console.log("STATE", this.state)
+        const data = this.state.data;
         return new Promise((resolve, reject)=>{
             if(data.course === undefined){
                 this.setErrors({course: "Not Enrolled in any Course!"})
@@ -247,7 +248,7 @@ class ShowAttendance extends Component{
                         'August', 'September', 'October', 
                         'November', 'December'];
         const attendance = this.props.attendance;
-        
+        console.log("ATTENDANCE", attendance[Object.keys(attendance)[0]])
         return (
             <React.Fragment>
                 <div className="MainBody SidePage ShowAttendanceMainPage">

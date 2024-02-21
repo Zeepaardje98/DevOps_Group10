@@ -44,13 +44,12 @@ class AddCoursePage extends Component{
             const teacherProjection = {};
             this.props.setTeachers(teacherFilters,teacherProjection)
             .then(()=>{
-                const teacher = this.props.teachers[0] ?? null
-                /**
-                 * CHECK IF TEACHER IS EMPTY
-                 */
-                if(teacher){
-                    setInputState.call(this,"data","teacherAssigned",this.props.teachers[0]['name'])
-                }else{
+                console.log(this.props.teachers.length)
+                if (this.props.teachers.length() > 0) {
+                    const teacher = this.props.teachers[0]
+                    setInputState.call(this,"data","teacherAssigned",teacher['name'])
+                }
+                else{
                     /**
                      * IF THERE IS NOT TEACHER IN THE DEPARTMENT
                      * WE HAVE TO GIVE AN ERROR
@@ -74,8 +73,8 @@ class AddCoursePage extends Component{
 
     setDefaultState = ()=>{
         console.log(this.props);
-        const department = this.props.departments ? this.props.departments[0]['name'] : ""
-        const teacherAssigned = this.props.teachers ? this.props.teachers[0]['name'] : ""
+        const department = this.props.departments.length > 0 ? this.props.departments[0]['name'] : ""
+        const teacherAssigned = this.props.teachers.length > 0 ? this.props.teachers[0]['name'] : ""
         setInputState.call(this,"data","department",department);
         setInputState.call(this,"data","teacherAssigned",teacherAssigned);
     }

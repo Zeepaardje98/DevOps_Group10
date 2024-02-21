@@ -16,7 +16,8 @@ class ShowTeachersPage extends Component {
         const projection = {
             "username": true,
             "name": true,
-            "department": true
+            "department": true,
+            "courseAssigned": true
         }
 
         /**
@@ -36,6 +37,7 @@ class ShowTeachersPage extends Component {
                     <div className="teacher_mainBody">
                         {this.props.teachers.map((teacher =>{
                             const {username, name, department, courseAssigned } = teacher;
+                            console.log("COURSE ASSIGNED", courseAssigned)
                             return <TeacherComponent 
                                         key={username} 
                                         username={username} 

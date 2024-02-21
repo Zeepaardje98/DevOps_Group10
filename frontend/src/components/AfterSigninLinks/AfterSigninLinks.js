@@ -16,9 +16,9 @@ class AfterSigninLinks extends Component{
       <div className="after-signin-nav">
         <div className="user-profile-div">
             <a href="/" className="user-image">
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/53474/atom_profile_01.jpg" alt="User"/>
+              <img src="https://stpetersdbb.catholic.edu.au/wp-content/uploads/2020/03/Attendance20logo201.jpg" alt="User"/>
             </a>
-            <p className="username">Ubaid Manzoor</p>
+            <p className="username">Attendance System</p>
         </div>
         <div className="sidepane-nav">
           <div className='navigation'>
@@ -26,7 +26,9 @@ class AfterSigninLinks extends Component{
               <React.Fragment>
                 <Link to="/enroll" className='navigation-item'>Enroll To Course</Link>
                 <Link to="/showAttendance" className='navigation-item'>Show Attendance</Link>
-                {/* <Link to="/attendance" className='navigation-item'>Attendance</Link> */}
+                {/* <Link to="/attendance" className='navigation-item'>Atte
+                n
+                dance</Link> */}
               </React.Fragment>
             }
             { 

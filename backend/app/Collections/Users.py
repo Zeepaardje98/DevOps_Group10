@@ -36,11 +36,11 @@ class Users:
                         "description": "must be a boolean"
                     },
                     "semester": {
-                        "bsonType": "integer",
+                        "bsonType": "number",
                         "description": "it must be a number"
                     },
                     "roll_no": {
-                        "bsonType": "integer",
+                        "bsonType": "number",
                         "description": "it must be a number"
                     }
                 }
