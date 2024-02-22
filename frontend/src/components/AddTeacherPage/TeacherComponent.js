@@ -31,7 +31,7 @@ class TeacherComponent extends Component {
                                 if(!isConfirmed){
                                     return <button onClick={this.onButtonClick}>Confirm</button>
                                 }else{
-                                    return <button onClick={this.onButtonClick}>Unconfirmed</button>
+                                    return <button onClick={this.onButtonClick}>Unconfirm</button>
                                 }
                             })()
                         }

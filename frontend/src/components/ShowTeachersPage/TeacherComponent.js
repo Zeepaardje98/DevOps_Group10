@@ -14,9 +14,12 @@ const TeacherComponent = (props)=>{
 
                     </header>
                     <div className="teacherBody">
-                        <p>
-                            CourseAssigned : <span>{courseAssigned}</span>
-                        </p>
+                    <p>Courses assigned : </p>
+                            <ul style={{ paddingLeft: '40px' }}>
+                                {courseAssigned.map((course, index) => (
+                                    <li key={index}>{course}</li>
+                                ))}
+                            </ul>
                         <p>
                             Department : <span>{department}</span>
                         </p>

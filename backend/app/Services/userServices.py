@@ -22,10 +22,21 @@ class userServices():
         users = db['users']
         
         userData['_id'] = userData.pop('username')
+        print(userData['_id'])
         userData.update({
             "confirmed": userData['confirmed'] if userData['confirmed'] else False
 
         })
+        user = {
+            "_id": userData['_id'],
+            "name": userData['_id'],
+            "department": userData["department"] if userData["department"] else "",
+            "password": userData["password"],
+            "role": userData["role"],
+            "confirmed": userData["confirmed"],
+            "semester": int(userData["semester"]) if userData["semester"] else 0,
+            "roll_no": int(userData["roll_no"]) if userData["roll_no"] else 0
+        }
         # userData = {
         #     "_id": user['username'],
         #     "name": user['name'],
@@ -34,11 +45,12 @@ class userServices():
         #     "role": user['role'],
         #     "confirmed": user['confirmed'] if user['confirmed'] else False
         # }
-        if(userData['role'] == "student"):
-            userData['semester'] = userData['semester']
+        # if(userData['role'] == "student"):
+        #     user['semester'] = userData['semester']
+        #     user["roll_no"] = userData["roll_no"]
 
 
-        if(userServices.usernameExists(userData['_id'])):
+        if(userServices.usernameExists(user['_id'])):
             response = {
                 "status": 200,
                 "result": {
@@ -48,7 +60,7 @@ class userServices():
             }
         else:
             try:
-                users.insert_one(userData)
+                users.insert_one(user)
                 response = {
                     "status": 200,
                     "result" : {
@@ -58,7 +70,7 @@ class userServices():
                 }
             except WriteError:
                 response = {
-                    "status": 200,
+                    "status": 400,
                     "result": {
                         "status": 422,
                         "message": "wrong input by user"
@@ -125,6 +137,7 @@ class userServices():
     def updateCourseInfoOfUser(course, filter, role):
         Users = db['users']
         if role == "student":
+            print("INSIDE updateCourseInfoOfUser")
             Users.update_one( {**filter}, {"$push": {"courseEnrolled": course} } )
         elif role == "teacher":
             Users.update_one({**filter}, {"$push": {"courseAssigned": course}} )

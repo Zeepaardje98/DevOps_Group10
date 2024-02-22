@@ -8,7 +8,7 @@ const clearAttendance = ()=> ({
 })
 
 const getAndSetAttendance = (filters={}) =>{
-    console.log(filters)
+    console.log("FILTERS", filters)
     return (dispatch) => {
         return new Promise((resolve,reject)=>{
             fetch("http://localhost:5000/getAttendance",{

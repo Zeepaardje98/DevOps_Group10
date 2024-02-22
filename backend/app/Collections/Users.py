@@ -34,6 +34,14 @@ class Users:
                     "confirmed": {
                         "bsonType": "bool",
                         "description": "must be a boolean"
+                    },
+                    "semester": {
+                        "bsonType": "number",
+                        "description": "it must be a number"
+                    },
+                    "roll_no": {
+                        "bsonType": "number",
+                        "description": "it must be a number"
                     }
                 }
             }

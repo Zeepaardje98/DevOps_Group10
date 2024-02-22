@@ -286,7 +286,7 @@ class AttendancePage extends Component{
             .then(()=>{
                 // GET ALL TEACHER RELATED COURSES
                 const relatedCourses = this.props.courses;
-                if(relatedCourses){
+                if(relatedCourses.length > 0){
                     this.setState(prevState =>{
                         return {
                             isFetching: true,

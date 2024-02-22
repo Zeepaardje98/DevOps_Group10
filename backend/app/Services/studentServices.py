@@ -28,7 +28,7 @@ class studentServices():
                             })
             # print(studentEnrolled)
             if(not studentEnrolled):
-                courses.update({"name":course_to_enroll},{"$push":{"student_enrolled":student_data}})
+                courses.update_one({"name":course_to_enroll},{"$push":{"student_enrolled":student_data}})
                 response.update({
                     "result": {
                         "status": 201,
@@ -93,3 +93,16 @@ class studentServices():
     def get_all_students_enrolled(name:str, department:str, semester:int):
         courses = db['courses']
         return courses.find_one({"name":name,"department": department, "semester":semester})['student_enrolled']
+
+    @staticmethod
+    def get_all_enrolled_courses(roll_no: str):
+        print("ROLL NO", roll_no)
+        enrolled_courses = []
+        courses = db['courses']
+        cursor = courses.find({})
+        for el in cursor:
+            enrolled = el["student_enrolled"]
+            for student in enrolled:
+                if str(student["roll_no"]) == str(roll_no):
+                    enrolled_courses.append(el["name"])
+        return enrolled_courses

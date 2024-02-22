@@ -31,14 +31,14 @@ def initiate_attendence():
     imagestr = request.files['file']
     
     try: 
-        IMAGE_UPLOAD_PATH = "./static/images"
+        IMAGE_UPLOAD_PATH = app.config["IMAGE_UPLOAD_PATH"]
         path = os.path.join(IMAGE_UPLOAD_PATH,courseData.get('name'))
-        print("Path : ",path)
         imagestr.save(path)    
         imageLoaded = cv2.imread(path)
 
         class_image_encodings = face_recognition.face_encodings(imageLoaded, model="cnn")
         all_student_data = studentServices.get_all_students_enrolled(**courseData)
+        print("ALL STUDENTS", all_student_data)
         known_face_encodings = get_student_encoding(all_student_data)
         all_student_roll_nos = get_student_rolls(all_student_data)
 
@@ -120,7 +120,7 @@ def get_all_courses():
 def getAttendance():
     
     data = json.loads(request.data.decode('utf8'))
-    print(data)
+    print("DATA", data)
     
     if(data['role'] == 'student'):
         filters = {
@@ -148,10 +148,11 @@ def getAttendance():
     
     try:
         attendance = courseServices.getAttendance(filters, others)
+        print("COURSE CONTROLLER", attendance)
         return jsonify({
             "status": 200,
             "result": {
-                "status": 200,
+                "status": 200, 
                 "message": "Fetched",
                 "data": attendance
             }
