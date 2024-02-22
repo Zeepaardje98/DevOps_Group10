@@ -25,3 +25,8 @@ infrastructure for the IT department.
 
 ## Contact
 Maurice Mouw
+
+## Original Code Credits
+The original code is from the following repositories:
+* [Front-end](https://github.com/Ubaid-Manzoor/AttendanceApp-FrontEnd)
+* [Back-end](https://github.com/Ubaid-Manzoor/AttendanceApp-BackEnd)
