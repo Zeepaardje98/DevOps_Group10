@@ -38,7 +38,6 @@ def initiate_attendence():
 
         class_image_encodings = face_recognition.face_encodings(imageLoaded, model="cnn")
         all_student_data = studentServices.get_all_students_enrolled(**courseData)
-        print("ALL STUDENTS", all_student_data)
         known_face_encodings = get_student_encoding(all_student_data)
         all_student_roll_nos = get_student_rolls(all_student_data)
 
@@ -46,6 +45,7 @@ def initiate_attendence():
         courseServices.mark_all_absent(courseData) ############ SOME ERROR
 
         for face_encoding,student_roll in zip(class_image_encodings,all_student_roll_nos):
+            print("STUD ROLL", student_roll)
             matches = face_recognition.compare_faces(known_face_encodings,face_encoding)
             face_distance = face_recognition.face_distance(known_face_encodings,face_encoding)
             best_match_index = np.argmin(face_distance)
