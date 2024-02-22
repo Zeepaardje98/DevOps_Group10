@@ -51,7 +51,6 @@ def enroll_student():
     ################ FROM DATA ###############
     courseData = json.loads(request.form.get('courseData'))
     student_roll = request.form.get('roll_no')
-    print("STUDENT ROLL", os.getcwd())
     imagestr = request.files['file']
     ##########################################
     
@@ -64,7 +63,6 @@ def enroll_student():
 
     ### CREATING ENCODING OF THE FACE OF THE STUDENT
     student_image_encoding = face_recognition.face_encodings(imageLoaded)[0]
-    print("ENCODING", list(student_image_encoding))
     responseObjectArray = []
     ######## LOOP THROUGH ALL THE COURSE TO ENROLL ########### 
     for course,condition in courseData.items():

@@ -26,7 +26,6 @@ class studentServices():
                 courses.find_one({"name": course_to_enroll,
                               "student_enrolled": {"$elemMatch":{"roll_no":roll_no} } 
                             })
-            # print(studentEnrolled)
             if(not studentEnrolled):
                 courses.update_one({"name":course_to_enroll},{"$push":{"student_enrolled":student_data}})
                 response.update({
