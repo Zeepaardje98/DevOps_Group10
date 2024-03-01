@@ -50,6 +50,9 @@ app.config['CORS_HEADERS'] = 'Content-Type, Authorization, x-access-tokens, Acce
 
 app.config['IMAGE_UPLOAD_PATH'] = "app/static/images"
 
+# OLD WAY TO CREATE CLIENT: LEAVING IT HERE JUST IN CASE
+# client = MongoClient(host='localhost',port=27017)
+
 # Create a new client and connect to the server
 uri = "mongodb+srv://DevOps:SHdDA77rE1CvVW5M@devops.wi51crs.mongodb.net/?retryWrites=true&w=majority&appName=DevOps"
 # client = MongoClient(uri, server_api=ServerApi('1'))
