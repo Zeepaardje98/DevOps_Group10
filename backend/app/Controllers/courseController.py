@@ -63,11 +63,10 @@ def initiate_attendence():
 
     imagestr = request.files['file']
     
-    try: 
-        IMAGE_UPLOAD_PATH = app.config["IMAGE_UPLOAD_PATH"]
-        path = os.path.join(IMAGE_UPLOAD_PATH,courseData.get('name'))
-        imagestr.save(path)
-        imageLoaded = cv2.imread(path)
+    try:
+        image_bytes = imagestr.read()
+        image_numpy = np.frombuffer(image_bytes, dtype=np.uint8)
+        imageLoaded = cv2.imdecode(image_numpy, cv2.IMREAD_COLOR)
 
         class_image_encodings = face_recognition.face_encodings(imageLoaded, model="cnn")
         all_student_data = studentServices.get_all_students_enrolled(**courseData)

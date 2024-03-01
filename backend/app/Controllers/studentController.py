@@ -6,6 +6,7 @@ import face_recognition
 from flask import jsonify, request
 from app.Services.studentServices import studentServices
 from app.Services.userServices import userServices
+import numpy as np
 
 @app.route('/get_all_students',methods=['POST'])
 def get_all_students():
@@ -257,11 +258,9 @@ responses:
     ##########################################
     
     ### SAVING THE IMAGE 
-    path = os.path.join(app.config["IMAGE_UPLOAD_PATH"],student_roll)
-    imagestr.save(path) 
-    
-    ### READING IMAGE BACK   
-    imageLoaded = cv2.imread(path)
+    image_bytes = imagestr.read()
+    image_numpy = np.frombuffer(image_bytes, dtype=np.uint8)
+    imageLoaded = cv2.imdecode(image_numpy, cv2.IMREAD_COLOR)
 
     ### CREATING ENCODING OF THE FACE OF THE STUDENT
     student_image_encoding = face_recognition.face_encodings(imageLoaded)[0]
