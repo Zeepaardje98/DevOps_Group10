@@ -30,12 +30,12 @@ class userServices():
         user = {
             "_id": userData['_id'],
             "name": userData['_id'],
-            "department": userData["department"] if userData["department"] else "",
+            "department": userData.get("department", "CS"),
             "password": userData["password"],
             "role": userData["role"],
             "confirmed": userData["confirmed"],
-            "semester": int(userData["semester"]) if userData["semester"] else 0,
-            "roll_no": int(userData["roll_no"]) if userData["roll_no"] else 0
+            "semester": int(userData.get("semester", 0)),
+            "roll_no": int(userData.get("roll_no", 0))
         }
         # userData = {
         #     "_id": user['username'],
