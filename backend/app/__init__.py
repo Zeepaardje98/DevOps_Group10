@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from flask_cors import CORS
-
+import certifi
 
 app = Flask(__name__)
 CORS(app=app, support_credentials=True)
@@ -13,7 +13,8 @@ app.config['IMAGE_UPLOAD_PATH'] = "app/static/images"
 
 # Create a new client and connect to the server
 uri = "mongodb+srv://DevOps:SHdDA77rE1CvVW5M@devops.wi51crs.mongodb.net/?retryWrites=true&w=majority&appName=DevOps"
-client = MongoClient(uri, server_api=ServerApi('1'))
+# client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, tlsCAFile=certifi.where())
 
 # Send a ping to confirm a successful connection
 try:
