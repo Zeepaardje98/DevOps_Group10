@@ -15,7 +15,40 @@ from app.Services.userServices import userServices
 
 @app.route('/initiate_attendence',methods=['POST'])
 def initiate_attendence():
-    
+    """Endpoint to take attendance after a teacher initiates it
+    ---
+    tags:
+      - Course Management
+    parameters:
+      - in: body
+        name: courseData
+        required: true
+        description: The course data that will be used to query the database to fetch course information
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the course.
+            department:
+              type: string
+              description: The department of the course.
+            semester:
+              type: integer
+              description: The semester of the course.
+      - in: formData
+        name: image
+        required: true
+        description: The image file
+        type: file
+    responses:
+      200:
+        description: Successfully initiated attendance
+      400:
+        description: Problem occurred with the uploaded image
+      401:
+        description: No student enrolled in the course
+    """
     courseData = json.loads(request.form.get('courseData'))
 
     course = courseServices.getCourse(filter=courseData)
@@ -33,7 +66,7 @@ def initiate_attendence():
     try: 
         IMAGE_UPLOAD_PATH = app.config["IMAGE_UPLOAD_PATH"]
         path = os.path.join(IMAGE_UPLOAD_PATH,courseData.get('name'))
-        imagestr.save(path)    
+        imagestr.save(path)
         imageLoaded = cv2.imread(path)
 
         class_image_encodings = face_recognition.face_encodings(imageLoaded, model="cnn")
@@ -72,6 +105,44 @@ def initiate_attendence():
 
 @app.route('/add_course',methods=['POST'])
 def add_course():
+    """ Endpoint to add a course (only admins can do it)
+    ---
+    tags:
+      - Course Management
+    parameters:
+      - in: body
+        name: requestBody
+        required: true
+        description: JSON object containing course data.
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the course.
+              example: "DevOps and Cloud-based Software"
+            department:
+              type: string
+              description: The department of the course.
+              example: "CS"
+            semester:
+              type: integer
+              description: The semester of the course.
+              example: 1
+            teacherAssigned:
+              type: string
+              description: The teacher assigned to the course.
+              example: "teacher"
+    responses:
+      200:
+        description: Course successfully added.
+      400:
+        description: Invalid request format or missing parameters.
+      409:
+        description: Course already exists.
+      500:
+        description: Internal server error.
+    """
     # Structur of "data"
     # data = {
     #     "name": "",
@@ -88,7 +159,59 @@ def add_course():
 
 @app.route('/get_all_courses',methods=['POST'])
 def get_all_courses():
-    
+    """
+Retrieve all courses based on optional filters and projection.
+
+---
+tags:
+  - Course Management
+parameters:
+  - in: body
+    name: filters
+    description: Optional JSON object containing filters for course attributes.
+    schema:
+      type: object
+      properties:
+        department:
+          type: string
+          description: Filter by department name.
+          example: "CS"
+        name:
+          type: string
+          description: Filter by course name.
+          example: "DevOps and Cloud-based Software"
+        semester:
+          type: string
+          description: Filter by semester.
+          example: 1
+        teacherAssigned:
+          type: string
+          description: Filter by teacher assigned.
+          example: "Yuri Demchenko"
+  - in: body
+    name: projection
+    description: Optional JSON object containing projection settings for course attributes.
+    schema:
+      type: object
+      properties:
+        department:
+          type: boolean
+          description: Include department field in the response.
+        name:
+          type: boolean
+          description: Include name field in the response.
+        semester:
+          type: boolean
+          description: Include semester field in the response.
+        teacherAssigned:
+          type: boolean
+          description: Include teacherAssigned field in the response.
+responses:
+  200:
+    description: List of courses retrieved successfully.
+  400:
+    description: Invalid request format.
+    """
     ## Called From (check for call of getAndSetCourses action in these js file which intern calls get_all_courses)
     #1)AttendancePage/AttendancePage.js 
     #2)ShowCoursePage/ShowCoursePage.js
@@ -118,7 +241,55 @@ def get_all_courses():
 
 @app.route('/getAttendance',methods=['POST'])
 def getAttendance():
-    
+    """
+Retrieve attendance information based on specified criteria.
+
+---
+tags:
+  - Course Management
+parameters:
+  - in: body
+    name: requestBody
+    required: true
+    description: JSON object containing attendance query parameters.
+    schema:
+      type: object
+      properties:
+        all_or_one:
+          type: string
+          description: Specify whether to retrieve attendance for all time or just one month.
+          enum: ["all", "one"]
+          example: "one"
+        course:
+          type: string
+          description: The name of the course.
+          example: "Experimental Design and Data Analysis"
+        department:
+          type: string
+          description: The department of the course.
+          example: "CS"
+        month:
+          type: integer
+          description: The month number (Uses 0-based indexing, so January is 0).
+          example: 1
+        role:
+          type: string
+          description: The role of the entity (e.g., student, teacher).
+          example: "student"
+        roll_no:
+          type: integer
+          description: The roll number (student ID) of the entity.
+          example: 1
+        semester:
+          type: integer
+          description: The semester of the course.
+          example: 1
+responses:
+  200:
+    description: Attendance information retrieved successfully.
+  400:
+    description: Invalid request format or missing parameters.
+    """
     data = json.loads(request.data.decode('utf8'))
     print("DATA", data)
     
