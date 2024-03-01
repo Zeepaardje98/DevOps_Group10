@@ -10,21 +10,23 @@ app.config['CORS_HEADERS'] = 'Content-Type, Authorization, x-access-tokens, Acce
 app.config['IMAGE_UPLOAD_PATH'] = "app/static/images"
 
 
-client = MongoClient(host='localhost',port=27017)
-db = client.AttendenceSystem
+# client = MongoClient(host='localhost',port=27017)
+# db = client.AttendenceSystem
+db = None
 
 ## INITIATING COLLECTIONS
 from app.Collections.Courses import Courses
 from app.Collections.Departments import Departments
 from app.Collections.Users import Users
-Courses.create()
-Departments.create()
-Users.create()
+# Courses.create()
+# Departments.create()
+# Users.create()
 
 from app.Controllers import courseController
 from app.Controllers import departmentController
 from app.Controllers import userController
 from app.Controllers import studentController
 from app.Controllers import teacherController
+from app.Controllers import rootController
 
 
