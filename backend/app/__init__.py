@@ -1,6 +1,9 @@
 from flask import Flask
 from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 from flask_cors import CORS
+import certifi
 from flasgger import Swagger
 
 app = Flask(__name__)
@@ -47,8 +50,21 @@ app.config['CORS_HEADERS'] = 'Content-Type, Authorization, x-access-tokens, Acce
 
 app.config['IMAGE_UPLOAD_PATH'] = "app/static/images"
 
+# OLD WAY TO CREATE CLIENT: LEAVING IT HERE JUST IN CASE
+# client = MongoClient(host='localhost',port=27017)
 
-client = MongoClient(host='localhost',port=27017)
+# Create a new client and connect to the server
+uri = "mongodb+srv://DevOps:SHdDA77rE1CvVW5M@devops.wi51crs.mongodb.net/?retryWrites=true&w=majority&appName=DevOps"
+# client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, tlsCAFile=certifi.where())
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
 db = client.AttendenceSystem
 
 ## INITIATING COLLECTIONS
