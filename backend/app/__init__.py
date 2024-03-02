@@ -48,8 +48,6 @@ swagger_config = {
 swagger = Swagger(app, template=swagger_template, config=swagger_config)
 app.config['CORS_HEADERS'] = 'Content-Type, Authorization, x-access-tokens, Access-Control-Allow-Origin'
 
-app.config['IMAGE_UPLOAD_PATH'] = "app/static/images"
-
 # OLD WAY TO CREATE CLIENT: LEAVING IT HERE JUST IN CASE
 # client = MongoClient(host='localhost',port=27017)
 
