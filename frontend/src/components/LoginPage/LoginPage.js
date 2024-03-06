@@ -9,6 +9,7 @@ import setInputState from '../../genericFunctions/setInputState';
 import handleSubmit from '../../genericFunctions/handleSubmit';
 
 import "./LoginPage.scss";
+import bcrypt from 'bcryptjs';
 class LoginPage extends Component{
     constructor(props){
         super(props);
@@ -83,6 +84,10 @@ class LoginPage extends Component{
             if(data.password === ''){
                 this.setErrors({password: "Fill the box"})
             }
+            // else {
+            //     data.password = bcrypt.hashSync(data.password, "$2a$10$ThisIsACustomSaltValue");
+            // }
+            console.log("LOGIN PAGE", data.password)
             resolve();
         })
     }
