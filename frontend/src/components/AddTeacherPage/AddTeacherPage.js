@@ -8,7 +8,7 @@ import { getAndSetDepartments } from '../../actions/department';
 import setInputState from '../../genericFunctions/setInputState';
 import handleSubmit from '../../genericFunctions/handleSubmit';
 import clearMessage from '../../genericFunctions/clearMessage';
-
+import bcrypt from 'bcryptjs';
 // import './_addTeacherPage.scss';
 class AddTeacherPage extends Component{
     constructor(props){
@@ -97,6 +97,9 @@ class AddTeacherPage extends Component{
             }else if(data['password'] !== data['confirmPassword']){
                 this.setErrors({confirmPassword: "password did not match"})
             }
+            else {
+                data['password'] = bcrypt.hashSync(data['password'], 10);
+            }
             resolve();
         })
 
@@ -152,7 +155,7 @@ class AddTeacherPage extends Component{
     ///////////////////// LIFE CYCLE FUNCTION ////////////////////////////////////////
 
     setDefaultState = ()=>{
-        const department = this.props.departments[0]['name']
+        const department = (this.props.departments !== undefined && this.props.departments.length > 0) ? this.props.departments[0]['name'] : "";
         setInputState.call(this,"data","department",department);
     }
     

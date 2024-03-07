@@ -5,9 +5,11 @@ from pymongo.server_api import ServerApi
 from flask_cors import CORS
 import certifi
 from flasgger import Swagger
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 CORS(app=app, support_credentials=True)
+bcrypt = Bcrypt(app)
 
 swagger_template ={
     "swagger": "2.0",
