@@ -7,6 +7,8 @@ from flask import jsonify, request
 from app.Services.studentServices import studentServices
 from app.Services.userServices import userServices
 import numpy as np
+from app.helpers.image_helper import encrypt_face_encoding
+from app import key
 
 @app.route('/get_all_students',methods=['POST'])
 def get_all_students():
@@ -263,16 +265,16 @@ responses:
     imageLoaded = cv2.imdecode(image_numpy, cv2.IMREAD_COLOR)
 
     ### CREATING ENCODING OF THE FACE OF THE STUDENT
-    student_image_encoding = face_recognition.face_encodings(imageLoaded)[0]
+    student_image_encoding = encrypt_face_encoding(list(face_recognition.face_encodings(imageLoaded)[0]), key)
     responseObjectArray = []
     ######## LOOP THROUGH ALL THE COURSE TO ENROLL ########### 
-    for course,condition in courseData.items():
+    for course,condition in courseData.items(): 
         # IF CONDITION === TRUE(TRUE IF CLICKED THE CHECKBOX WHILE ENROLLING) 
         #    ONLY THEN ENROLL STUDENT TO THE COURSE
         if condition:    
             student_data = {
                 "roll_no": student_roll,
-                "encoding": list(student_image_encoding)
+                "encoding": student_image_encoding
             }
             courseResponse = studentServices.enroll_student(course,student_data)
             userServices.updateCourseInfoOfUser(course,{"roll_no": student_roll},'student')

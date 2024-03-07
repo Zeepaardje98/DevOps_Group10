@@ -68,8 +68,8 @@ class Courses:
                                     "description": "roll must be a string and is required"
                                 },
                                 "encoding": {
-                                    "bsonType": "array",
-                                    "description": "encoding must be an array and is required"
+                                    "bsonType": "binData",
+                                    "description": "encoding must be in binary format and is required"
                                 }
                             }
                         }
