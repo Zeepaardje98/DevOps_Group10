@@ -17,11 +17,30 @@ Resources:
       Events:
         ApiEvent:
           Type: HttpApi
+      Tracing: Active
+      Environment:
+        Variables:
+          FLASK_ENV: production
 
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: .
       DockerTag: devops-backend-test
+
+# Add CORS to the HttpApi
+#  ServerlessHttpApi:
+#    Type: AWS::Serverless::HttpApi
+#    Properties:
+#      CorsConfiguration:
+#        AllowMethods:
+#          - GET
+#          - POST
+#          - PUT
+#          - DELETE
+#        AllowHeaders:
+#          - '*'
+#        AllowOrigins:
+#          - '*'
 
 Outputs:
   FlaskApi:

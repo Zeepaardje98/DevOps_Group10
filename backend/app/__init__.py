@@ -6,26 +6,24 @@ from flask_cors import CORS
 import certifi
 from flasgger import Swagger
 from flask_bcrypt import Bcrypt
+import os
 
 app = Flask(__name__)
 CORS(app=app, support_credentials=True)
 bcrypt = Bcrypt(app)
 
-swagger_template ={
+swagger_template = {
     "swagger": "2.0",
     "info": {
-      "title": "Documentation for Attendance App",
-      "description": "API Documentation for the attendance application",
-      "contact": {
-        "name": "DevOps Group 10",
+        "title": "Documentation for Attendance App",
+        "description": "API Documentation for the attendance application",
+        "contact": {
+            "name": "DevOps Group 10",
         },
-      "version": "1.0",
-      "basePath":"http://localhost:3000",
-              },
-    "schemes": [
-        "http",
-        "https"
-    ],
+        "version": "1.0",
+        "basePath": "https://localhost:3000" if os.environ.get('FLASK_ENV') == 'production' else "http://localhost:3000"
+    },
+    "schemes": ["https"] if os.environ.get('FLASK_ENV') == 'production' else ["http", "https"]
 }
 
 swagger_config = {
@@ -71,6 +69,7 @@ db = client.AttendenceSystem
 from app.Collections.Courses import Courses
 from app.Collections.Departments import Departments
 from app.Collections.Users import Users
+
 Courses.create()
 Departments.create()
 Users.create()
@@ -80,3 +79,4 @@ from app.Controllers import departmentController
 from app.Controllers import userController
 from app.Controllers import studentController
 from app.Controllers import teacherController
+from app.Controllers import rootController

@@ -12,7 +12,7 @@ Note 1: You may need to first login to the AWS CLI with the command `aws sso log
 Note 2: Docker needs to be running
 Note 3: If the command fails, you may need to delete the `credsStore` line in the `~/.docker/config.json` file and try again
 2) sam build (in the backend directory)
-3) sam deploy --guided (in the backend directory, if asked for auth proceed without it, and for the region use eu-north-1)
+3) sam deploy --no-confirm-changeset (in the backend directory, if asked for auth proceed without it, and for the region use eu-north-1)
 4) The API endpoint is at "FlaskApi - URL for application            https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/"
 
 ### Run the docker container (the artifact of sam build command) locally
