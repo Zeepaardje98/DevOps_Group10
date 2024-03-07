@@ -9,7 +9,8 @@ in `__init__.py`, add the line `db.["users"].drop()` (replace users with the nam
 ### Instructions for getting the backend deployed to lambda
 1) aws ecr-public get-login-password --region us-east-1 --profile YourSSOProfile | docker login --username AWS --password-stdin public.ecr.aws
 Note 1: You may need to first login to the AWS CLI with the command `aws sso login --profile YourSSOProfile`
-Note 2: If the command fails, you may need to delete the `credsStore` line in the `~/.docker/config.json` file and try again
+Note 2: Docker needs to be running
+Note 3: If the command fails, you may need to delete the `credsStore` line in the `~/.docker/config.json` file and try again
 2) sam build (in the backend directory)
 3) sam deploy --guided (in the backend directory, if asked for auth proceed without it, and for the region use eu-north-1)
 4) The API endpoint is at "FlaskApi - URL for application            https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/"
