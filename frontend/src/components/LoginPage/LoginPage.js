@@ -133,7 +133,7 @@ class LoginPage extends Component{
     onSubmit = (e)=>{
         e.preventDefault();
 
-        const url = "http://localhost:5000/login";
+        const url = `${process.env.REACT_APP_API_URL}/login`;
         handleSubmit.call(this,url);
     }
 

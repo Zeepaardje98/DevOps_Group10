@@ -246,7 +246,7 @@ class AttendancePage extends Component{
          * THERE WILL BE SHOWING ERROR ON THE FORM IF ANY EXIST
         */
         .then(()=>{
-            const url = "http://localhost:5000/initiate_attendence";
+            const url = `${process.env.REACT_APP_API_URL}/initiate_attendence`;
             this.makeRequest(url) 
         })
     }

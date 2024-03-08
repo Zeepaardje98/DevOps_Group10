@@ -44,7 +44,7 @@ export const updateStudent = (whomToUpdate,whatToUpdate) => ({
 export const startUpdateStudent = (whomToUpdate,whatToUpdate) => {
     console.log("ToUPdata",whatToUpdate)
     return (dispatch) => {
-        fetch('http://localhost:5000/update_student',{
+        fetch(`${process.env.REACT_APP_API_URL}/update_student`,{
             method:['POST'],
             headers: {
                 "Content-Type": "application/json"

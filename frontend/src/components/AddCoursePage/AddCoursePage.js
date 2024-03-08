@@ -159,7 +159,7 @@ class AddCoursePage extends Component{
     onSubmit = (e)=>{
         e.preventDefault();
 
-        const url = 'http://localhost:5000/add_course';
+        const url = `${process.env.REACT_APP_API_URL}/add_course`;
         handleSubmit.call(this,url);
 
     }
