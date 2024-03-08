@@ -12,7 +12,7 @@ const clearStudents = ()=> ({
 export const getAndSetStudents = (filters={},projection={}) => {
     return (dispatch) => {
         return new Promise((resolve,reject)=>{
-            fetch("http://localhost:5000/get_all_students",{
+            fetch(`${process.env.REACT_APP_API_URL}/get_all_students`,{
                 method: 'POST',
                 body: JSON.stringify({
                     filters,

@@ -11,7 +11,7 @@ const getAndSetAttendance = (filters={}) =>{
     console.log("FILTERS", filters)
     return (dispatch) => {
         return new Promise((resolve,reject)=>{
-            fetch("http://localhost:5000/getAttendance",{
+            fetch(`${process.env.REACT_APP_API_URL}/getAttendance`,{
                 method: 'POST',
                 body: JSON.stringify(filters)
             })
