@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Test SAM Template for DevOps Project Backend
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  DevOpsBackendTest:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      MemorySize: 256
+      Events:
+        ApiEvent:
+          Type: HttpApi
+      Tracing: Active
+      Environment:
+        Variables:
+          FLASK_ENV: production
+
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: .
+      DockerTag: devops-backend-test
+
+# Add CORS to the HttpApi
+#  ServerlessHttpApi:
+#    Type: AWS::Serverless::HttpApi
+#    Properties:
+#      CorsConfiguration:
+#        AllowMethods:
+#          - GET
+#          - POST
+#          - PUT
+#          - DELETE
+#        AllowHeaders:
+#          - '*'
+#        AllowOrigins:
+#          - '*'
+
+Outputs:
+  FlaskApi:
+    Description: "API Gateway endpoint URL for Prod stage for Flask function"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/"
+  DevOpsBackendTest:
+    Description: "Flask Lambda Function ARN"
+    Value: !GetAtt DevOpsBackendTest.Arn
+  FlaskIamRole:
+    Description: "Implicit IAM Role created for Flask function"
+    Value: !GetAtt DevOpsBackendTestRole.Arn

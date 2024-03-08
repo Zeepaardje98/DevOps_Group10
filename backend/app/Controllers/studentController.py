@@ -114,13 +114,11 @@ responses:
     description: Internal server error.
     """
     data = json.loads(request.data.decode('utf8'))
-    filters = data['filters']
-    projection = data['projection']
-    filters = None if not filters else filters 
-    projection = None if  not projection else projection
+    filters = data.get('filters')
+    projection = data.get('projection')
     
     print("***********************")
-    print(filters)
+    print(filters, projection)
     
     try:
         filters['_id'] = filters.pop('username')

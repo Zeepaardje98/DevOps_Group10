@@ -1,0 +1,13 @@
+FROM public.ecr.aws/docker/library/python:3.9-slim
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.1 /lambda-adapter /opt/extensions/lambda-adapter
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        libopenblas-dev \
+        liblapack-dev \
+	apt-transport-https \
+	ffmpeg libsm6 libxext6
+RUN pip install dlib
+RUN pip install face_recognition_models
+RUN pip install opencv-python

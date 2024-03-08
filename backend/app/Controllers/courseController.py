@@ -1,4 +1,4 @@
-from flask import request,jsonify
+from flask import request, jsonify
 from app import app
 import json
 import os
@@ -6,14 +6,14 @@ import cv2
 import face_recognition
 import numpy as np
 
-from app.helpers.data_helper import get_student_encoding,get_student_rolls
+from app.helpers.data_helper import get_student_encoding, get_student_rolls
 
-from app.Services.courseServices import  courseServices
+from app.Services.courseServices import courseServices
 from app.Services.studentServices import studentServices
 from app.Services.userServices import userServices
 
 
-@app.route('/initiate_attendence',methods=['POST'])
+@app.route('/initiate_attendence', methods=['POST'])
 def initiate_attendence():
     """Endpoint to take attendance after a teacher initiates it
     ---
@@ -52,7 +52,7 @@ def initiate_attendence():
     courseData = json.loads(request.form.get('courseData'))
 
     course = courseServices.getCourse(filter=courseData)
-    if(not course['student_enrolled']):
+    if (not course['student_enrolled']):
         return jsonify({
             "status": 200,
             "result": {
@@ -62,7 +62,7 @@ def initiate_attendence():
         })
 
     imagestr = request.files['file']
-    
+
     try:
         image_bytes = imagestr.read()
         image_numpy = np.frombuffer(image_bytes, dtype=np.uint8)
@@ -73,17 +73,16 @@ def initiate_attendence():
         known_face_encodings = get_student_encoding(all_student_data)
         all_student_roll_nos = get_student_rolls(all_student_data)
 
-        
-        courseServices.mark_all_absent(courseData) ############ SOME ERROR
+        courseServices.mark_all_absent(courseData)  ############ SOME ERROR
 
-        for face_encoding,student_roll in zip(class_image_encodings,all_student_roll_nos):
+        for face_encoding, student_roll in zip(class_image_encodings, all_student_roll_nos):
             print("STUD ROLL", student_roll)
-            matches = face_recognition.compare_faces(known_face_encodings,face_encoding)
-            face_distance = face_recognition.face_distance(known_face_encodings,face_encoding)
+            matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+            face_distance = face_recognition.face_distance(known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distance)
 
             if matches[best_match_index]:
-                courseServices.mark_present(student_roll,courseData)
+                courseServices.mark_present(student_roll, courseData)
         return jsonify({
             "status": 200,
             "result": {
@@ -102,7 +101,7 @@ def initiate_attendence():
         })
 
 
-@app.route('/add_course',methods=['POST'])
+@app.route('/add_course', methods=['POST'])
 def add_course():
     """ Endpoint to add a course (only admins can do it)
     ---
@@ -147,16 +146,16 @@ def add_course():
     #     "name": "",
     #     "teacherAssigned"
     courseData = json.loads(request.data.decode('utf8'))
-    
+
     filter = {
         "name": courseData['teacherAssigned'],
         "department": courseData['department']
     }
-    userServices.updateCourseInfoOfUser(courseData['name'],filter,"teacher")
+    userServices.updateCourseInfoOfUser(courseData['name'], filter, "teacher")
     return courseServices.add_course(courseData)
 
 
-@app.route('/get_all_courses',methods=['POST'])
+@app.route('/get_all_courses', methods=['POST'])
 def get_all_courses():
     """
 Retrieve all courses based on optional filters and projection.
@@ -212,33 +211,31 @@ responses:
     description: Invalid request format.
     """
     ## Called From (check for call of getAndSetCourses action in these js file which intern calls get_all_courses)
-    #1)AttendancePage/AttendancePage.js 
-    #2)ShowCoursePage/ShowCoursePage.js
-    #3)EnrollToCoursePage/EnrollToCoursePage.js
+    # 1)AttendancePage/AttendancePage.js
+    # 2)ShowCoursePage/ShowCoursePage.js
+    # 3)EnrollToCoursePage/EnrollToCoursePage.js
 
-    
     ## Loading the data request data
-    filters = json.loads(request.data.decode('utf8'))['filters']
-    projection = json.loads(request.data.decode('utf8'))['projection']
-    filters = None if not filters else filters 
-    projection = None if  not projection else projection
-    
-    curser = courseServices.get_all_courses(filters,projection)
-    
+    filters = json.loads(request.data.decode('utf8')).get('filters')
+    projection = json.loads(request.data.decode('utf8')).get('projection')
+
+    curser = courseServices.get_all_courses(filters, projection)
+
     allCourses = []
     for course in curser:
         if not projection:
             del course['student_enrolled']
         del course['_id']
         allCourses.append(course)
-    
+
     response = jsonify({
-        "allCourses":allCourses
+        "allCourses": allCourses
     })
-    
+
     return response
 
-@app.route('/getAttendance',methods=['POST'])
+
+@app.route('/getAttendance', methods=['POST'])
 def getAttendance():
     """
 Retrieve attendance information based on specified criteria.
@@ -291,8 +288,8 @@ responses:
     """
     data = json.loads(request.data.decode('utf8'))
     print("DATA", data)
-    
-    if(data['role'] == 'student'):
+
+    if (data['role'] == 'student'):
         filters = {
             "name": data['course'],
             "department": data['department'],
@@ -315,14 +312,14 @@ responses:
             "all_or_one": data['all_or_one'],
             "role": data['role']
         }
-    
+
     try:
         attendance = courseServices.getAttendance(filters, others)
         print("COURSE CONTROLLER", attendance)
         return jsonify({
             "status": 200,
             "result": {
-                "status": 200, 
+                "status": 200,
                 "message": "Fetched",
                 "data": attendance
             }
@@ -336,6 +333,3 @@ responses:
                 "data": []
             }
         })
-    
-
-    

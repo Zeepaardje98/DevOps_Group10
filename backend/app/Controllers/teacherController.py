@@ -79,10 +79,8 @@ responses:
   500:
     description: Internal server error.
     """
-    filters = json.loads(request.data.decode('utf8'))['filters']
-    projection = json.loads(request.data.decode('utf8'))['projection']
-    filters = None if not filters else filters 
-    projection = None if  not projection else projection
+    filters = json.loads(request.data.decode('utf8')).get('filters')
+    projection = json.loads(request.data.decode('utf8')).get('projection')
     
     print("*********************")
     print("*********************")
