@@ -8,6 +8,7 @@ PyJWT~=2.8.0
 flasgger~=0.9.5
 flask_bcrypt~=1.0.1
 certifi~=2024.2.2
+cryptography~=3.4.8
 
 blinker~=1.6.2
 click~=8.1.3

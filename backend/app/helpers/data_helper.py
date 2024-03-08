@@ -1,6 +1,8 @@
 import json
 import random
 import numpy as np
+from app.helpers.image_helper import decrypt_face_encoding
+from app import key
 
 def extract_json(byte_data):
     return json.loads(byte_data.decode('utf8'))
@@ -16,7 +18,7 @@ def get_student_encoding(students_data:dict):
 
     # print(students_data)
 
-    return [student_data['encoding'] for student_data in students_data]
+    return [decrypt_face_encoding(student_data['encoding'], key) for student_data in students_data]
 
 def get_student_rolls(students_data:dict):
     return [student_data['roll_no'] for student_data in students_data]
