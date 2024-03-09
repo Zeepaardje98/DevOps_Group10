@@ -8,7 +8,6 @@ import { getAndSetDepartments } from '../../actions/department';
 import setInputState from '../../genericFunctions/setInputState';
 import handleSubmit from '../../genericFunctions/handleSubmit';
 import clearMessage from '../../genericFunctions/clearMessage';
-import bcrypt from 'bcryptjs';
 // import './_addTeacherPage.scss';
 class AddTeacherPage extends Component{
     constructor(props){
@@ -96,9 +95,6 @@ class AddTeacherPage extends Component{
                 this.setErrors({confirmPassword: "Fill the box"})
             }else if(data['password'] !== data['confirmPassword']){
                 this.setErrors({confirmPassword: "password did not match"})
-            }
-            else {
-                data['password'] = bcrypt.hashSync(data['password'], 10);
             }
             resolve();
         })

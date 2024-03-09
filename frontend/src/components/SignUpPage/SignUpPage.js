@@ -4,7 +4,6 @@ import setInputState from '../../genericFunctions/setInputState';
 import handleSubmit from '../../genericFunctions/handleSubmit';
 
 import "./SignUpPage.scss"
-import bcrypt from 'bcryptjs';
 
 //*****************************************************************************************
 //*****************************************************************************************
@@ -99,11 +98,6 @@ class SignUpPage extends Component{
             if(user_data['password'] !== user_data['confirm_password']){
                 this.setErrors({confirmPassword: "password did not match"})
             }
-            else {
-                // user_data['password'] = bcrypt.hashSync(user_data['password'], "$2a$10$ThisIsACustomSaltValue");
-                user_data['password'] = bcrypt.hashSync(user_data['password'], 10);
-            }
-            console.log("SIGNUP PAGE", user_data['password']);
             resolve();
         })
     }

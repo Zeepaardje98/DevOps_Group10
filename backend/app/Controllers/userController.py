@@ -141,7 +141,7 @@ responses:
     description: Internal server error.
     """
     # get the username from the request query parameters
-    username = request.args.get('username')
+    username = json.loads(request.data.decode('utf8'))['username']
     return userServices.get_user(username)
 
 
