@@ -33,7 +33,6 @@ class userServices():
             "semester": int(userData.get("semester", 0)),
             "roll_no": int(userData.get("roll_no", 0))
         }
-        print("USER PASS", user["password"])
         # userData = {
         #     "_id": user['username'],
         #     "name": user['name'],
@@ -57,7 +56,6 @@ class userServices():
             }
         else:
             try:
-                print("INSIDE TRY")
                 users.insert_one(user)
                 response = {
                     "status": 200,
