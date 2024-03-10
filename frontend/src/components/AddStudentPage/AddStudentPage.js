@@ -9,7 +9,6 @@ import setInputState from '../../genericFunctions/setInputState';
 import handleSubmit from '../../genericFunctions/handleSubmit';
 import clearMessage from '../../genericFunctions/clearMessage';
 // import './_addStudentPage.scss';
-import bcrypt from 'bcryptjs';
 class AddStudentPage extends Component{
     constructor(props){
         super(props);
@@ -99,9 +98,6 @@ class AddStudentPage extends Component{
                 this.setErrors({confirmPassword: "Fill the box"})
             }else if(data['password'] !== data['confirmPassword']){
                 this.setErrors({confirmPassword: "password did not match"})
-            }
-            else {
-                data['password'] = bcrypt.hashSync(data['password'], 10);
             }
             resolve()
         })
