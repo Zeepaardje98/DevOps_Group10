@@ -19,7 +19,7 @@ class LoginPage extends Component{
             data: {
                 username: "",
                 password: "",
-                remember_me: true
+                remember_me: false
             },
             errorsExists: false,
             errors:{
