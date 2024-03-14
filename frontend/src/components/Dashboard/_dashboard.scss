@@ -1,3 +1,37 @@
 .dashboard-container {
   flex:12;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Quicksand', sans-serif;
+}
+
+.dashboard-container h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.dashboard-description {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.user-role {
+  font-size: 16px;
+  color: #666;
 }

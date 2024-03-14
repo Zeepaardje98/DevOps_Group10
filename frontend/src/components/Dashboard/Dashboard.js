@@ -9,27 +9,29 @@ class Dashboard extends Component{
 
   render(){
     const logginStatus = !!getUsernameFromCookie();
-    
+
     if(logginStatus){
       return(
-        <div className="dashboard-container">
-          <h1>Welcome to the one click attendance app </h1>
-          <p>Dashboard</p>
-          <h1>{this.props.username}</h1>
-          <h1>{this.props.role}</h1>
-        </div>
+          <div className="dashboard-container">
+              <h1>Welcome to the One-Click Attendance App</h1>
+              <p className="dashboard-description">Dashboard</p>
+              <div className="user-info">
+                  <h2 className="username">{this.props.username}</h2>
+                  <p className="user-role">{this.props.role}</p>
+              </div>
+          </div>
       )
-    }else{
-      return <Redirect to="/login" />
-    }      
+    } else {
+        return <Redirect to="/login"/>
+    }
   }
 }
 
-const mapStateToProps = (state) =>{
-  return{
-    username: state.user.username,
-    role: state.user.role
-  }
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.username,
+        role: state.user.role
+    }
 }
 
 export default connect(mapStateToProps)(Dashboard);
