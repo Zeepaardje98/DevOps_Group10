@@ -8,13 +8,14 @@ from flasgger import Swagger
 from flask_bcrypt import Bcrypt
 import os
 from cryptography.fernet import Fernet
-# from app.helpers.secrets import get_secret
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app=app, support_credentials=True)
 bcrypt = Bcrypt(app)
-key = b'Bujq_ddUgRyPQ2dwOKSWxTBYKmpeTKtrDxDptdsYrY8='
+key = os.environ.get('ENCRYPT_KEY').encode('utf-8')
 
 swagger_template = {
     "swagger": "2.0",
@@ -54,11 +55,9 @@ app.config['CORS_HEADERS'] = 'Content-Type, Authorization, x-access-tokens, Acce
 
 # OLD WAY TO CREATE CLIENT: LEAVING IT HERE JUST IN CASE
 # client = MongoClient(host='localhost',port=27017)
-
 # Create a new client and connect to the server
-# username, password = get_secret()
-# uri = "mongodb+srv://" + username + ":" + password + "@devops.wi51crs.mongodb.net/?retryWrites=true&w=majority&appName=DevOps"
-uri = "mongodb+srv://DevOps:SHdDA77rE1CvVW5M@devops.wi51crs.mongodb.net/?retryWrites=true&w=majority&appName=DevOps"
+uri = "mongodb+srv://" + os.environ.get('DB_USER') + ":" + os.environ.get(
+    'DB_PASS') + "@devops.wi51crs.mongodb.net/?retryWrites=true&w=majority&appName=DevOps"
 # client = MongoClient(uri, server_api=ServerApi('1'))
 client = MongoClient(uri, tlsCAFile=certifi.where())
 
