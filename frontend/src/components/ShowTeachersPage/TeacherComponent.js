@@ -16,7 +16,7 @@ const TeacherComponent = (props)=>{
                     <div className="teacherBody">
                     <p>Courses assigned : </p>
                             <ul style={{ paddingLeft: '40px' }}>
-                                {courseAssigned.map((course, index) => (
+                                {courseAssigned?.map((course, index) => (
                                     <li key={index}>{course}</li>
                                 ))}
                             </ul>
