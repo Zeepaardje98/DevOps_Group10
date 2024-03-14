@@ -133,7 +133,7 @@ class LoginPage extends Component{
     onSubmit = (e)=>{
         e.preventDefault();
 
-        const url = `${process.env.REACT_APP_API_URL}/login`;
+        const url = `https://2lfa5vsxej.execute-api.eu-north-1.amazonaws.com/login`;
         handleSubmit.call(this,url);
     }
 
