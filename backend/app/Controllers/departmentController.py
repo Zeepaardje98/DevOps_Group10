@@ -47,12 +47,18 @@ Add a new department.
 tags:
   - Department Management
 parameters:
-  - in: query
-    name: name
+  - in: body
+    name: body
     required: true
     description: The name of the department.
     schema:
-      type: string
+      id: Department
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The name of the department.
 responses:
   200:
     description: Department added successfully.

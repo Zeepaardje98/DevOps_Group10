@@ -5,7 +5,6 @@ import handleSubmit from '../../genericFunctions/handleSubmit';
 
 import "./SignUpPage.scss"
 
-
 //*****************************************************************************************
 //*****************************************************************************************
 //*****************************************************************************************
@@ -84,7 +83,6 @@ class SignUpPage extends Component{
         this.setState({errorsExists: false});
     }
 
-
     applyAuthentication(){
         const user_data = this.state.data;
         return new Promise((resolve,reject)=>{
@@ -100,7 +98,6 @@ class SignUpPage extends Component{
             if(user_data['password'] !== user_data['confirm_password']){
                 this.setErrors({confirmPassword: "password did not match"})
             }
-
             resolve();
         })
     }

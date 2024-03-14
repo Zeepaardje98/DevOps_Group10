@@ -140,8 +140,7 @@ responses:
   500:
     description: Internal server error.
     """
-    print(json.loads(request.data.decode('utf8')))
-    
+    # get the username from the request query parameters
     username = json.loads(request.data.decode('utf8'))['username']
     return userServices.get_user(username)
 

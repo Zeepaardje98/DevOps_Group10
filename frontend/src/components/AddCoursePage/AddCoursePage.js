@@ -45,7 +45,7 @@ class AddCoursePage extends Component{
             this.props.setTeachers(teacherFilters,teacherProjection)
             .then(()=>{
                 console.log(this.props.teachers.length)
-                if (this.props.teachers.length() > 0) {
+                if (this.props.teachers.length > 0) {
                     const teacher = this.props.teachers[0]
                     setInputState.call(this,"data","teacherAssigned",teacher['name'])
                 }
@@ -73,8 +73,8 @@ class AddCoursePage extends Component{
 
     setDefaultState = ()=>{
         console.log(this.props);
-        const department = this.props.departments.length > 0 ? this.props.departments[0]['name'] : ""
-        const teacherAssigned = this.props.teachers.length > 0 ? this.props.teachers[0]['name'] : ""
+        const department = (this.props.departments !== undefined && this.props.departments.length > 0) ? this.props.departments[0]['name'] : "";
+        const teacherAssigned = this.props.teachers !== undefined && this.props.teachers.length > 0 ? this.props.teachers[0]['name'] : "";
         setInputState.call(this,"data","department",department);
         setInputState.call(this,"data","teacherAssigned",teacherAssigned);
     }
@@ -185,7 +185,7 @@ class AddCoursePage extends Component{
         .then(()=>{
 
             // SET A DEFAULT DEPARTMENT IN STATE
-            const defaultDepartment = this.props.departments[0].name;
+            const defaultDepartment = this.props.departments !== undefined && this.props.departments.length > 0 ? this.props.departments[0].name : "";
             setInputState.call(this,"data","department",defaultDepartment);
 
             const teacherFilters = {
@@ -212,7 +212,7 @@ class AddCoursePage extends Component{
     ////////////////////// LIFE CYCLE FUNCTIONS ENDS /////////////////////////////////
 
     render() {
-        const listOfDepartments = this.props.departments;
+        const listOfDepartments = this.props.departments !== undefined ? this.props.departments : [];
         const listOfTeachers = this.props.teachers;
 
         return (

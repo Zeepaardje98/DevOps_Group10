@@ -6,12 +6,8 @@ from pymongo.errors import WriteError
 from flask import jsonify, Response
 import datetime 
 import jwt
-
-
+from app import bcrypt
 class userServices():
-    
-
-        
     @staticmethod
     def usernameExists(username:str):
         users = db['users']
@@ -31,7 +27,7 @@ class userServices():
             "_id": userData['_id'],
             "name": userData['_id'],
             "department": userData.get("department", "CS"),
-            "password": userData["password"],
+            "password": bcrypt.generate_password_hash(userData["password"]).decode('utf-8'),
             "role": userData["role"],
             "confirmed": userData["confirmed"],
             "semester": int(userData.get("semester", 0)),
@@ -87,38 +83,48 @@ class userServices():
         return Users.find_one({"_id": username,"password":password})
 
     @staticmethod
+    def check_user_wo_password(username: str):
+        Users = db['users']
+
+        return Users.find_one({"_id": username})
+
+    @staticmethod
     def get_user(username:str):
         Users = db['users']
-        
+        print("GETUSER", username)
         return jsonify(Users.find_one({"_id":username}))
     
     @staticmethod
     def login(username,password):
-        user = userServices.check_user(username,password)
-        
-        if(user and user['role'] != "admin" and (not user['confirmed'])):
-            responseData = {
-                "status": 200,
-                "result": {
-                    "status":403,
-                    "message": "Confirmation is Pending"
-                }
-            }
-            response = jsonify(responseData)
-        elif(user):
-            # jwToken = jwt.encode(user,username).decode()
-            responseData = {
-                "status":200,
-                "result":{
-                    "data":{
-                        "username":username,
-                        "role":user['role']
-                        },
+        # user = userServices.check_user(username,password)
+        user = userServices.check_user_wo_password(username)
+
+        # salt = "$2a$10$ThisIsACustomSaltValue"
+        # pass_hash = Bcrypt.generate_password_hash(bcrypt, password, 10)
+        if (user and bcrypt.check_password_hash(user['password'], password)):
+            if(user['role'] != "admin" and (not user['confirmed'])):
+                responseData = {
                     "status": 200,
-                    "message": "User is Logged In"
+                    "result": {
+                        "status":403,
+                        "message": "Confirmation is Pending"
+                    }
                 }
-            }
-            response = jsonify(responseData)
+                response = jsonify(responseData)
+            elif(user):
+                # jwToken = jwt.encode(user,username).decode()
+                responseData = {
+                    "status":200,
+                    "result":{
+                        "data":{
+                            "username":username,
+                            "role":user['role']
+                            },
+                        "status": 200,
+                        "message": "User is Logged In"
+                    }
+                }
+                response = jsonify(responseData)
             
 
         else:

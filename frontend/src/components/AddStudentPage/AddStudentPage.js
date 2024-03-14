@@ -9,7 +9,6 @@ import setInputState from '../../genericFunctions/setInputState';
 import handleSubmit from '../../genericFunctions/handleSubmit';
 import clearMessage from '../../genericFunctions/clearMessage';
 // import './_addStudentPage.scss';
-
 class AddStudentPage extends Component{
     constructor(props){
         super(props);
@@ -150,7 +149,7 @@ class AddStudentPage extends Component{
 
     ///////////////////// LIFE CYCLE FUNCTION ////////////////////////////////////////
     setDefaultState = ()=>{
-        const department = this.props.departments[0]['name']
+        const department = this.props.departments[0] !== undefined ? this.props.departments[0]['name'] : "";
         setInputState.call(this,"data","department",department);
     }
 
@@ -171,7 +170,7 @@ class AddStudentPage extends Component{
 
     render() {
         const listOfStudents = this.props.students;
-        const listOfDepartments = this.props.departments;
+        const listOfDepartments = this.props.departments !== undefined ? this.props.departments : [];
 
         return (
             <div className="MainBody sidePage">
