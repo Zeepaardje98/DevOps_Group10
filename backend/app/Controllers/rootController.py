@@ -13,6 +13,6 @@ def hello():
         "status": 200,
         "result": {
             "message": message,
-            "env": os.environ.get('FLASK_ENV')
+            "env": os.environ.get('FLASK_ENV'),
         }
     })

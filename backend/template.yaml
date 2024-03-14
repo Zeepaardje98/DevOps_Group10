@@ -21,26 +21,14 @@ Resources:
       Environment:
         Variables:
           FLASK_ENV: production
+          DB_USER: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:MongoDB-kN1EPK:SecretString:Username}}' # Modify with your actual secret ARN and key
+          DB_PASS: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:MongoDB-kN1EPK:SecretString:Password}}' # Modify with your actual secret ARN and key
+          ENCRYPT_KEY: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:FernetEncryptionKey-BcYV5A:SecretString:EncryptionKey}}' # Modify with your actual secret ARN and key
 
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: .
       DockerTag: devops-backend-test
-
-# Add CORS to the HttpApi
-#  ServerlessHttpApi:
-#    Type: AWS::Serverless::HttpApi
-#    Properties:
-#      CorsConfiguration:
-#        AllowMethods:
-#          - GET
-#          - POST
-#          - PUT
-#          - DELETE
-#        AllowHeaders:
-#          - '*'
-#        AllowOrigins:
-#          - '*'
 
 Outputs:
   FlaskApi:
