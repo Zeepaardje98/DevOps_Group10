@@ -263,7 +263,10 @@ responses:
     imageLoaded = cv2.imdecode(image_numpy, cv2.IMREAD_COLOR)
 
     ### CREATING ENCODING OF THE FACE OF THE STUDENT
-    student_image_encoding = encrypt_face_encoding(list(face_recognition.face_encodings(imageLoaded)[0]), key)
+    encodings = face_recognition.face_encodings(imageLoaded)
+    if len(encodings) == 0:
+        return jsonify({"error": "No face found in the image"})
+    student_image_encoding = encrypt_face_encoding(list(encodings[0]), key)
     responseObjectArray = []
     ######## LOOP THROUGH ALL THE COURSE TO ENROLL ########### 
     for course,condition in courseData.items(): 
