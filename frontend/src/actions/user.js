@@ -8,7 +8,7 @@ export const setUser = (user) => ({
 export const getAndSetUser = ((username)=>{
   return (dispatch)=>{
         return new Promise((resolve, reject)=>{
-          fetch('http://localhost:5000/get_user',{
+          fetch(`${process.env.REACT_APP_API_URL}/get_user`,{
             method: 'POST',
             headers:{
               "Content-Type": "application/json"

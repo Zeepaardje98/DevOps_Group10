@@ -15,7 +15,7 @@ const clearCourse = ()=>{
 const getAndSetCourses = (filters={},projection={})=>{
     return (dispatch)=>{
         return new Promise((resolve,reject)=>{
-            fetch('http://localhost:5000/get_all_courses',{
+            fetch(`${process.env.REACT_APP_API_URL}/get_all_courses`,{
                 method: ['POST'],
                 body: JSON.stringify({
                     filters,

@@ -200,7 +200,7 @@ class EnrollToCoursePage extends Component{
         */
         .then(()=>{
             console.log("IN")
-            const url = "http://localhost:5000/enroll_student"
+            const url = `${process.env.REACT_APP_API_URL}/enroll_student`
             this.makeRequest(url); 
         })
         

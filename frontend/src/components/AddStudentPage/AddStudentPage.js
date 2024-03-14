@@ -140,7 +140,7 @@ class AddStudentPage extends Component{
     onSubmit = (e)=>{
         e.preventDefault();
 
-        const url = 'http://localhost:5000/signup';
+        const url = `${process.env.REACT_APP_API_URL}/signup`;
         handleSubmit.call(this,url);
     }
 

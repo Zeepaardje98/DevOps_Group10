@@ -13,7 +13,7 @@ export const getAndSetTeachers = (filters={}, projection={}) => {
     console.log("Filters : ",filters, "Projection : ", projection);
     return (dispatch) => {
         return new Promise((resolve, reject)=>{
-            fetch("http://localhost:5000/get_all_teachers",{
+            fetch(`${process.env.REACT_APP_API_URL}/get_all_teachers`,{
                 method: 'POST',
                 body: JSON.stringify({
                     filters,
@@ -43,7 +43,7 @@ export const updateTeacher = (whomToUpdate,whatToUpdate) => ({
 
 export const startUpdateTeacher = (whomToUpdate,whatToUpdate) => {
     return (dispatch) => {
-        fetch('http://localhost:5000/update_teacher',{
+        fetch(`${process.env.REACT_APP_API_URL}/update_teacher`,{
             method:['POST'],
             headers: {
                 "Content-Type": "application/json"

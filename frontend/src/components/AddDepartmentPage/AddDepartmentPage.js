@@ -109,7 +109,7 @@ class AddDepartmentPage extends Component{
     onSubmit = (e)=>{
         e.preventDefault();
 
-        const url = 'http://localhost:5000/add_department';
+        const url = `${process.env.REACT_APP_API_URL}/add_department`;
         handleSubmit.call(this,url);
     }
 
