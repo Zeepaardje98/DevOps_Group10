@@ -19,4 +19,4 @@ Note 3: If the command fails, you may need to delete the `credsStore` line in th
 1) docker run -d -p 8080:8080 name-of-ecr-image
 
 
-testsdf
+testsdfdfs
