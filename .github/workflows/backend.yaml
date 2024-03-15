@@ -2,8 +2,11 @@ name: Backend CI/CD
 
 on:
   push:
+    branches:
+      - cicd
     paths:
       - 'backend/**' # Monitor changes in the backend folder
+
 
 jobs:
   build:
