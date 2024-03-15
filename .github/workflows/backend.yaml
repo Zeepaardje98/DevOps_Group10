@@ -1,0 +1,26 @@
+name: Backend CI/CD
+
+on:
+  push:
+    paths:
+      - 'backend/**' # Monitor changes in the backend folder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies and build backend
+        run: |
+          cd backend
+          echo "Current directory: $(pwd)"
+          echo "Building the backend"
+
+
+      - name: Deploy backend
+        run: |
+          echo "Deploying the backend"
+          ls -la
