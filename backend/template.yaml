@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Test SAM Template for DevOps Project Backend
+  SAM Template for DevOps Project Backend
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -9,7 +9,7 @@ Globals:
     Timeout: 10
 
 Resources:
-  DevOpsBackendTest:
+  DevOpsBackend:
     Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
@@ -21,22 +21,22 @@ Resources:
       Environment:
         Variables:
           FLASK_ENV: production
-          DB_USER: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:MongoDB-kN1EPK:SecretString:Username}}' # Modify with your actual secret ARN and key
-          DB_PASS: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:MongoDB-kN1EPK:SecretString:Password}}' # Modify with your actual secret ARN and key
-          ENCRYPT_KEY: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:FernetEncryptionKey-BcYV5A:SecretString:EncryptionKey}}' # Modify with your actual secret ARN and key
+          DB_USER: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:MongoDB-kN1EPK:SecretString:Username}}'
+          DB_PASS: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:MongoDB-kN1EPK:SecretString:Password}}'
+          ENCRYPT_KEY: '{{resolve:secretsmanager:arn:aws:secretsmanager:eu-north-1:590183991179:secret:FernetEncryptionKey-BcYV5A:SecretString:EncryptionKey}}'
 
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: .
-      DockerTag: devops-backend-test
+      DockerTag: devops-backend
 
 Outputs:
   FlaskApi:
     Description: "API Gateway endpoint URL for Prod stage for Flask function"
     Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/"
-  DevOpsBackendTest:
+  DevOpsBackend:
     Description: "Flask Lambda Function ARN"
-    Value: !GetAtt DevOpsBackendTest.Arn
+    Value: !GetAtt DevOpsBackend.Arn
   FlaskIamRole:
     Description: "Implicit IAM Role created for Flask function"
-    Value: !GetAtt DevOpsBackendTestRole.Arn
+    Value: !GetAtt DevOpsBackendRole.Arn

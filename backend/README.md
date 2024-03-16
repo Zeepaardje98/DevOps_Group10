@@ -17,6 +17,3 @@ Note 3: If the command fails, you may need to delete the `credsStore` line in th
 
 ### Run the docker container (the artifact of sam build command) locally
 1) docker run -d -p 8080:8080 name-of-ecr-image
-
-
-testsdfdfs
