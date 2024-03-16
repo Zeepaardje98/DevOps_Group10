@@ -1,0 +1,59 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**' # Monitor changes in the backend folder
+      - '.github/workflows/backend.yml'
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+        # run: aws sts get-caller-identity
+
+      - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+
+      - name: Build backend
+        run: |
+          cd backend
+          sam build --use-container
+
+      - name: Deploy backend
+        run: |
+          cd backend
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name devops-backend --resolve-image-repos --resolve-s3 --capabilities CAPABILITY_IAM --region eu-north-1 --no-progressbar
+
+      - name: Run test
+        run: |
+          function_url=$(aws cloudformation describe-stacks --stack-name devops-backend --query "Stacks[0].Outputs[?OutputKey=='FlaskApi'].OutputValue" --output text)
+          
+          # Ping the function
+          actual_output=$(curl -s -X GET $function_url)
+          expected_output='{"result":{"env":"production","message":"Server is running"},"status":200}'
+             
+          # Compare actual output with expected output
+          if [[ "$actual_output" != "$expected_output" ]]; then
+            echo "Actual output: $actual_output"
+            echo "Expected output: $expected_output"
+            echo "Test failed: Actual output does not match expected output"
+            exit 1
+          else
+            echo "Test passed"
+          fi
