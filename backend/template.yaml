@@ -17,6 +17,14 @@ Resources:
       Events:
         ApiEvent:
           Type: HttpApi
+          Properties:
+            CorsConfiguration:
+              AllowOrigins:
+                - '*'
+              AllowHeaders:
+                - '*'
+              AllowMethods:
+                - '*'
       Tracing: Active
       Environment:
         Variables:
