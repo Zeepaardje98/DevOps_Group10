@@ -147,7 +147,7 @@ class LoginPage extends Component{
                     <div className="Container LoginContainer">
                         <div className="FormContainer LoginFormContainer">
                             <header>
-                                <h1>Account Login (DEMO CHANGE)</h1>
+                                <h1>Account Login</h1>
                             </header>
                             {this.state.errors.usernameOrPassword && <p className="errorMessage">{this.state.errors.usernameOrPassword}</p>}
                             <form onSubmit={this.onSubmit}>
