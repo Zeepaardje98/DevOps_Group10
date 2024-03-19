@@ -51,7 +51,7 @@ class userServices():
                 "status": 200,
                 "result": {
                     "status": 409,
-                    "message": "username already exists!"
+                    "message": "username already exists! (DEMO CHANGE)"
                 }
             }
         else:
