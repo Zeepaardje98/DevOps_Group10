@@ -7,6 +7,9 @@ Description: >
 Globals:
   Function:
     Timeout: 10
+  Api:
+    Cors:
+      AllowOrigin: "'*'"
 
 Resources:
   DevOpsBackend:
@@ -17,14 +20,6 @@ Resources:
       Events:
         ApiEvent:
           Type: HttpApi
-          Properties:
-            CorsConfiguration:
-              AllowOrigins:
-                - '*'
-              AllowHeaders:
-                - '*'
-              AllowMethods:
-                - '*'
       Tracing: Active
       Environment:
         Variables:
